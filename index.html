@@ -378,10 +378,10 @@
     .avatar-caption { margin-top: 14px; }
     .hero-name { font-size: clamp(32px, 4.5vw, 44px); letter-spacing: -0.01em; }
     .hero-role {
-      font-family: var(--serif); font-size: 18px; line-height: 1.5;
+      font-family: var(--serif); font-size: 15px; line-height: 1.5;
       color: var(--text); margin-bottom: 18px;
     }
-    .hero-role b { font-weight: 400; color: var(--accent2); font-style: italic; font-size: 20px; }
+    .hero-role b { font-weight: 400; color: var(--accent2); font-style: italic; font-size: 16px; }
     .hero-role .dot { color: var(--text-3); margin: 0 2px; }
     .hero-role a { color: var(--accent); border-bottom: 1.5px solid rgba(123,140,122,0.4); }
     .hero-role a:hover { text-decoration: none; border-bottom-color: var(--accent); }
@@ -394,8 +394,13 @@
       content: ''; position: absolute; left: 0; bottom: 0;
       width: 36px; height: 3px; border-radius: 3px; background: var(--accent2);
     }
-    .pub-card { box-shadow: 0 1px 3px rgba(60,55,45,0.05); }
-    .pub-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(90,100,88,0.14); }
+    .pub-card {
+      background: rgba(255,255,255,0.45);
+      border-color: rgba(212,207,199,0.6);
+      box-shadow: none;
+    }
+    .pub-thumb { border-right-color: rgba(212,207,199,0.6); }
+    .pub-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.8); border-color: #c5cbc4; box-shadow: 0 8px 22px rgba(90,100,88,0.10); }
     .pub-card { transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s; }
     .tl-item { transition: background 0.15s; border-radius: 8px; padding-left: 10px; padding-right: 10px; margin: 0 -10px; }
     .tl-item:hover { background: rgba(255,255,255,0.6); }
@@ -405,9 +410,21 @@
       width: 56px; height: 56px; object-fit: contain; flex-shrink: 0;
       background: white; border: 1px solid var(--border); border-radius: 50%; padding: 4px;
     }
-    .contact-card { box-shadow: 0 1px 3px rgba(60,55,45,0.05); transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; }
-    .contact-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(90,100,88,0.12); }
-    .dog-card { box-shadow: 0 4px 18px rgba(176,125,110,0.12); background: linear-gradient(135deg, white 60%, #f8efe9); }
+    .contact-card {
+      background: rgba(255,255,255,0.45);
+      border-color: rgba(212,207,199,0.6);
+      box-shadow: none;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .contact-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.8); border-color: #c5cbc4; box-shadow: 0 8px 22px rgba(90,100,88,0.10); }
+    .dog-card {
+      background: rgba(255,255,255,0.45);
+      border-color: rgba(212,207,199,0.6);
+      box-shadow: none;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .dog-card:hover { background: rgba(255,255,255,0.8); border-color: #c5cbc4; box-shadow: 0 8px 22px rgba(90,100,88,0.10); }
+    .dog-img { border-right-color: rgba(212,207,199,0.6); }
 
     /* ── Responsive ── */
     @media (max-width: 600px) {
