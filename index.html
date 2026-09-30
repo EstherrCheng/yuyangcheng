@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yuyang Cheng — UVA PhD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:        #f5f3ef;   /* warm off-white */
+      --surface:   #ece9e3;   /* muted warm gray */
+      --surface2:  #e2ded7;
+      --border:    #d4cfc7;
+      --accent:    #7b8c7a;   /* sage green — Morandi */
+      --accent2:   #b07d6e;   /* dusty terracotta */
+      --text:      #2e2c29;
+      --text-2:    #6b6760;
+      --text-3:    #9e9a93;
+      --sans:      'Inter', sans-serif;
+      --serif:     'DM Serif Display', serif;
+      --mono:      'DM Mono', monospace;
+      --max:       800px;
+      --nav-h:     56px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      height: var(--nav-h);
+      display: flex; align-items: center;
+    }
+    .nav-inner {
+      max-width: var(--max); width: 100%;
+      margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-name {
+      font-family: var(--mono); font-size: 13px;
+      color: var(--text-2); letter-spacing: 0.03em;
+    }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; color: var(--text-2);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Layout ── */
+    main { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+    section { padding: 64px 0 48px; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+
+    /* ── Section heading ── */
+    .sec-label {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent2); margin-bottom: 6px;
+    }
+    .sec-title {
+      font-family: var(--serif); font-size: 26px;
+      font-weight: 400; color: var(--text);
+      margin-bottom: 32px; line-height: 1.2;
+    }
+    .sec-title em { font-style: italic; color: var(--accent); }
+
+    /* ── Hero ── */
+    #about { padding-top: 72px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0 36px; align-items: start;
+    }
+
+    /* Avatar placeholder */
+    .avatar-wrap { position: relative; }
+    .avatar {
+      width: 220px; height: 262px;
+      border-radius: 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .avatar-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 8px;
+    }
+    .avatar-placeholder svg { opacity: 0.3; }
+    .avatar-placeholder span {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--text-3); letter-spacing: 0.08em;
+    }
+    .avatar-caption {
+      margin-top: 10px;
+      font-family: var(--mono); font-size: 10px;
+      color: var(--text-3); text-align: center;
+      letter-spacing: 0.05em; line-height: 1.5;
+    }
+
+    .hero-info {}
+    .hero-name {
+      font-family: var(--serif); font-size: clamp(28px, 4vw, 38px);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 4px; color: var(--text);
+    }
+    .hero-role {
+      font-size: 14px; color: var(--text-2);
+      margin-bottom: 16px;
+    }
+    .hero-role a { color: var(--accent); }
+    .hero-bio {
+      font-size: 14.5px; color: var(--text-2);
+      line-height: 1.8; margin-bottom: 20px;
+      max-width: 520px;
+    }
+    .hero-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .hero-links a {
+      font-size: 12px; font-family: var(--mono);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 4px;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .hero-links a:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: #eef0ec; text-decoration: none;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--text-3); background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3px 9px; border-radius: 3px;
+    }
+
+    /* ── Publications ── */
+    .pub-list { display: flex; flex-direction: column; gap: 24px; }
+    .pub-card {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0 24px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .pub-card:hover {
+      border-color: #b5bdb4;
+      box-shadow: 0 2px 12px rgba(90,100,88,0.10);
+    }
+    /* Paper image */
+    .pub-thumb {
+      width: 220px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0; min-height: 140px;
+    }
+    .pub-thumb { background: white; position: relative; }
+    .pub-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .pub-thumb-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px; padding: 20px;
+    }
+    .pub-thumb-placeholder svg { opacity: 0.25; }
+    .pub-thumb-placeholder span {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--text-3); letter-spacing: 0.08em;
+      text-align: center; line-height: 1.4;
+    }
+    /* Paper text */
+    .pub-body { padding: 16px 20px; }
+    .pub-meta {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.1em; color: var(--text-3);
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .pub-title {
+      font-size: 14.5px; font-weight: 500;
+      color: var(--text); line-height: 1.45;
+      margin-bottom: 6px;
+    }
+    .pub-title a { color: var(--text); }
+    .pub-title a:hover { color: var(--accent); text-decoration: none; }
+    .pub-authors {
+      font-size: 12.5px; color: var(--text-2); margin-bottom: 5px;
+    }
+    .pub-authors strong { color: var(--text); font-weight: 500; }
+    .pub-venue {
+      font-size: 12px; color: var(--text-3);
+      font-style: italic; margin-bottom: 10px;
+    }
+    .pub-venue b { font-style: normal; color: var(--accent2); font-weight: 500; }
+    .pub-badges { display: flex; gap: 7px; flex-wrap: wrap; }
+    .badge {
+      font-family: var(--mono); font-size: 10px;
+      padding: 3px 9px; border-radius: 3px;
+      border: 1px solid; letter-spacing: 0.04em;
+    }
+    .badge-pdf   { border-color: #b5bdb4; color: var(--accent); }
+    .badge-code  { border-color: #b8c4b5; color: #5a7858; }
+    .badge-award { border-color: #d9c0b4; color: var(--accent2); }
+    .badge-site  { border-color: var(--border); color: var(--text-2); }
+
+    /* ── CV-style sections (Education, Experience, Honors) ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-year {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--text-3); padding-top: 3px; line-height: 1.5;
+    }
+    .tl-body {}
+    .tl-title { font-size: 14.5px; font-weight: 500; color: var(--text); }
+    .tl-sub   { font-size: 13px; color: var(--text-2); }
+    .tl-desc  { font-size: 12.5px; color: var(--text-3); margin-top: 2px; }
+
+    .cv-download {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px;
+      font-family: var(--mono); font-size: 12px;
+      color: var(--accent);
+      border: 1px solid #b5bdb4;
+      padding: 8px 18px; border-radius: 5px;
+      transition: background 0.15s;
+    }
+    .cv-download:hover { background: #eef0ec; text-decoration: none; }
+
+    /* ── Contact ── */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 28px;
+    }
+    .contact-card {
+      background: white; border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 18px;
+      transition: border-color 0.15s;
+    }
+    .contact-card:hover { border-color: #b5bdb4; }
+    .contact-card a { display: block; color: inherit; }
+    .contact-card a:hover { text-decoration: none; }
+    .contact-type {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 3px;
+    }
+    .contact-value { font-size: 13.5px; color: var(--text); }
+    .contact-note { font-size: 14px; color: var(--text-2); max-width: 500px; }
+
+    /* ── Dog section ── */
+    #dog { border-bottom: none; padding-bottom: 20px; }
+    .dog-card {
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: 0 28px; align-items: center;
+      background: white; border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .dog-img {
+      width: 220px; min-height: 200px;
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      border-right: 1px solid var(--border); overflow: hidden;
+    }
+    .dog-img img { width: 100%; height: 100%; object-fit: cover; }
+    .dog-img-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px; padding: 24px;
+    }
+    .dog-img-placeholder svg { opacity: 0.25; }
+    .dog-img-placeholder span {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--text-3); text-align: center; line-height: 1.5;
+    }
+    .dog-text { padding: 24px 28px; }
+    .dog-name {
+      font-family: var(--serif); font-size: 24px; font-weight: 400;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .dog-breed {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--text-3); margin-bottom: 12px; letter-spacing: 0.06em;
+    }
+    .dog-bio { font-size: 14px; color: var(--text-2); line-height: 1.75; }
+    .dog-bio .hl {
+      font-weight: 600; color: var(--text);
+      background: linear-gradient(transparent 55%, rgba(176,125,110,0.28) 55%);
+      padding: 0 3px; border-radius: 3px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      max-width: var(--max); margin: 0 auto;
+      padding: 24px 32px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text {
+      font-family: var(--mono); font-size: 11px; color: var(--text-3);
+    }
+
+    /* ── Banner ── */
+    .banner {
+      width: 100%; height: 300px;
+      position: relative; overflow: hidden;
+      background: #4a7ab5;
+    }
+    .banner img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 36%;
+      display: block;
+    }
+    .banner-fade {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 28% 55% at 8% 108%, rgb(245,243,239) 35%, rgba(245,243,239,0) 100%),
+        radial-gradient(ellipse 22% 40% at 27% 112%, rgb(245,243,239) 30%, rgba(245,243,239,0) 100%),
+        radial-gradient(ellipse 30% 65% at 52% 110%, rgb(245,243,239) 35%, rgba(245,243,239,0) 100%),
+        radial-gradient(ellipse 20% 45% at 73% 113%, rgb(245,243,239) 30%, rgba(245,243,239,0) 100%),
+        radial-gradient(ellipse 26% 60% at 93% 108%, rgb(245,243,239) 35%, rgba(245,243,239,0) 100%),
+        linear-gradient(to bottom, rgba(245,243,239,0) 0%, rgba(245,243,239,0) 50%, rgba(245,243,239,0.55) 82%, rgba(245,243,239,0.9) 100%);
+      pointer-events: none;
+    }
+    .banner-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(105deg, #7b8c7a 0%, #9aa89a 45%, #c4cdc3 75%, #e2ded7 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .banner-placeholder span {
+      font-family: var(--mono); font-size: 11px;
+      color: rgba(255,255,255,0.45); letter-spacing: 0.12em;
+    }
+
+
+    /* ── Polish ── */
+    body { background: radial-gradient(1200px 500px at 50% -100px, #ebe8e1 0%, var(--bg) 70%) no-repeat, var(--bg); }
+    nav { box-shadow: 0 1px 12px rgba(60,55,45,0.05); }
+    .nav-name { font-weight: 500; color: var(--text); }
+    .nav-links a { position: relative; padding: 4px 0; }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 1.5px;
+      background: var(--accent2); transition: width 0.2s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .banner { box-shadow: inset 0 -1px 0 var(--border); }
+    #about { padding-top: 48px; }
+    .avatar {
+      border: 4px solid white; border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(60,55,45,0.18);
+    }
+    .avatar-caption { margin-top: 14px; }
+    .hero-name { font-size: clamp(32px, 4.5vw, 44px); letter-spacing: -0.01em; }
+    .hero-role {
+      font-family: var(--serif); font-size: 18px; line-height: 1.5;
+      color: var(--text); margin-bottom: 18px;
+    }
+    .hero-role b { font-weight: 400; color: var(--accent2); font-style: italic; font-size: 20px; }
+    .hero-role .dot { color: var(--text-3); margin: 0 2px; }
+    .hero-role a { color: var(--accent); border-bottom: 1.5px solid rgba(123,140,122,0.4); }
+    .hero-role a:hover { text-decoration: none; border-bottom-color: var(--accent); }
+    .hero-bio { color: var(--text); max-width: 560px; }
+    .hero-bio strong { font-weight: 600; color: var(--text); }
+    .hero-links a { background: white; }
+    .tag { background: white; border-radius: 99px; padding: 3px 12px; }
+    .sec-title { position: relative; padding-bottom: 14px; }
+    .sec-title::after {
+      content: ''; position: absolute; left: 0; bottom: 0;
+      width: 36px; height: 3px; border-radius: 3px; background: var(--accent2);
+    }
+    .pub-card { box-shadow: 0 1px 3px rgba(60,55,45,0.05); }
+    .pub-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(90,100,88,0.14); }
+    .pub-card { transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s; }
+    .tl-item { transition: background 0.15s; border-radius: 8px; padding-left: 10px; padding-right: 10px; margin: 0 -10px; }
+    .tl-item:hover { background: rgba(255,255,255,0.6); }
+    .tl-item .tl-year { color: var(--accent2); }
+    .tl-body.has-logo { display: flex; align-items: center; gap: 16px; }
+    .tl-logo {
+      width: 56px; height: 56px; object-fit: contain; flex-shrink: 0;
+      background: white; border: 1px solid var(--border); border-radius: 50%; padding: 4px;
+    }
+    .contact-card { box-shadow: 0 1px 3px rgba(60,55,45,0.05); transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s; }
+    .contact-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(90,100,88,0.12); }
+    .dog-card { box-shadow: 0 4px 18px rgba(176,125,110,0.12); background: linear-gradient(135deg, white 60%, #f8efe9); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      main { padding: 0 20px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .avatar { width: 200px; height: 238px; }
+      .tl-item { margin: 0; padding-left: 0; padding-right: 0; }
+      .pub-card { grid-template-columns: 1fr; }
+      .pub-thumb { width: 100%; height: 140px; border-right: none; border-bottom: 1px solid var(--border); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .dog-card { grid-template-columns: 1fr; }
+      .dog-img { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+      .tl-item { grid-template-columns: 1fr; }
+      .tl-year { margin-bottom: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-name">yuyang cheng</span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#honors">Honors</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Banner: banner2.jpg = sunset mountain view (default), banner1.jpg = forest bridge -->
+  <div class="banner">
+    <img src="images/banner_bridge.jpg" alt="landscape banner" />
+    <div class="banner-fade"></div>
+  </div>
+
+  <main>
+
+    <!-- ── About ── -->
+    <section id="about">
+      <div class="hero-grid">
+
+        <!-- Avatar -->
+        <div class="avatar-wrap">
+          <div class="avatar">
+                        <img src="images/me_hk_full.jpg" alt="Yuyang Cheng" />
+          </div>
+          <p class="avatar-caption">Yuyang Cheng<br/>UVA · School of Data Science</p>
+        </div>
+
+        <!-- Info -->
+        <div class="hero-info">
+          <h1 class="hero-name">Yuyang Cheng</h1>
+          <p class="hero-role">
+            <b>PhD Student</b> <span class="dot">·</span> <a href="https://datascience.virginia.edu" target="_blank">UVA School of Data Science</a>
+            <span class="dot">·</span> Advised by <a href="https://chirag-agarwall.github.io" target="_blank">Prof. Chirag Agarwal</a>
+          </p>
+          <p class="hero-bio">
+            I am a first-year PhD student at the <strong>University of Virginia School of Data Science</strong>.
+            My research focuses on <strong>Trustworthy AI Agents</strong>, <strong>AI Safety &amp; Interpretability</strong>,
+            and <strong>Multi-modal Learning</strong>. I am particularly interested in building reliable and
+            interpretable AI systems that can be safely deployed in real-world scenarios.
+            Previously, I received my M.Eng. from <strong>Peking University</strong> and dual B.A./B.Eng. from <strong>UESTC</strong>.
+          </p>
+          <div class="hero-links">
+            <a href="mailto:jrm9ga@virginia.edu">Email</a>
+            <a href="https://scholar.google.com/citations?user=fRRf-PUAAAAJ&amp;hl=en&amp;oi=ao" target="_blank">Google Scholar</a>
+            <a href="https://github.com/EstherrCheng" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/yuyangcheng/" target="_blank">LinkedIn</a>
+            <a href="images/YuyangCheng_CV.pdf" target="_blank">CV (PDF)</a>
+          </div>
+          <div class="tags">
+            <span class="tag">Trustworthy AI Agents</span>
+            <span class="tag">AI Safety &amp; Interpretability</span>
+            <span class="tag">Multi-modal Learning</span>
+            <span class="tag">Large Language Models</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Publications ── -->
+    <section id="publications">
+      <p class="sec-label">Research</p>
+      <h2 class="sec-title">Pub<em>lications</em></h2>
+      <div class="pub-list">
+
+        <!-- Paper 1: MEA → ICLR 2027 -->
+        <div class="pub-card">
+          <div class="pub-thumb">
+            <img src="images/MEA.jpg" alt="Paper figure" />
+          </div>
+          <div class="pub-body">
+            <p class="pub-meta">Under Review &nbsp;·&nbsp; ICLR 2027</p>
+            <p class="pub-title"><a href="https://estherrcheng.github.io/mea_website/" target="_blank">MEA: A Reward-Driven Multi-Agent System for Faithful Model Explanations</a></p>
+            <p class="pub-authors"><strong>Yuyang Cheng</strong>, Raghav Kaushik Ravi, Srivarshinee Sridhar, Sriparna Saha, Akash Ghosh, Chirag Agarwal</p>
+            <p class="pub-venue">Under review at <b>International Conference on Learning Representations (ICLR)</b>, 2027</p>
+          </div>
+        </div>
+
+        <!-- Paper 3: Micromotives → AACL 2025 Oral -->
+        <div class="pub-card">
+          <div class="pub-thumb">
+            <img src="images/Observing.jpg" alt="Paper figure" />
+          </div>
+          <div class="pub-body">
+            <p class="pub-meta">AACL 2025 &nbsp;·&nbsp; Conference</p>
+            <p class="pub-title"><a href="https://aclanthology.org/2025.ijcnlp-long.69/" target="_blank">Observing Micromotives and Macrobehavior of Large Language Models</a></p>
+            <p class="pub-authors"><strong>Yuyang Cheng</strong>, Xingwei Qu, Tomas Goldsack, Chenghua Lin, Chung Chi Chen</p>
+            <p class="pub-venue">In <b>Proceedings of the 14th IJCNLP-AACL</b>, 2025</p>
+            <div class="pub-badges">
+              <span class="badge badge-award">🏆 Oral</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paper 4: MAP-Neo -->
+        <div class="pub-card">
+          <div class="pub-thumb">
+            <img src="images/map-neo.jpg" alt="Paper figure" />
+          </div>
+          <div class="pub-body">
+            <p class="pub-meta">Technical Report &nbsp;·&nbsp; 2024</p>
+            <p class="pub-title"><a href="https://map-neo.github.io/" target="_blank">MAP-Neo: Highly Capable and Transparent Bilingual Large Language Model Series</a></p>
+            <p class="pub-authors">Ge Zhang*, Scott Qu*, Jiaheng Liu*, Chenchen Zhang*, Chenghua Lin*, Chou Leuang Yu, Danny Pan, <strong>Yuyang Cheng</strong>, et al.</p>
+            <p class="pub-venue"><b>arXiv preprint</b></p>
+          </div>
+        </div>
+
+        <!-- Paper 5: Chinese Tiny LLM → COLM 2024 -->
+        <div class="pub-card">
+          <div class="pub-thumb">
+            <img src="images/chinesetineyllm.jpg" alt="Paper figure" />
+          </div>
+          <div class="pub-body">
+            <p class="pub-meta">COLM 2024 &nbsp;·&nbsp; Conference</p>
+            <p class="pub-title"><a href="https://chinese-tiny-llm.github.io/" target="_blank">Chinese Tiny LLM: Pretraining a Chinese-Centric Large Language Model</a></p>
+            <p class="pub-authors">Xinrun Du*, Zhouliang Yu*, Songyang Gao*, Ding Pan, <strong>Yuyang Cheng</strong>, et al.</p>
+            <p class="pub-venue">In <b>Conference on Language Modeling (COLM)</b>, 2024</p>
+          </div>
+        </div>
+
+        <!-- Paper 6: CMMMU -->
+        <div class="pub-card">
+          <div class="pub-thumb">
+            <img src="images/cmmmu.jpg" alt="Paper figure" />
+          </div>
+          <div class="pub-body">
+            <p class="pub-meta">Technical Report &nbsp;·&nbsp; 2024</p>
+            <p class="pub-title"><a href="https://cmmmu-benchmark.github.io/" target="_blank">CMMMU: A Chinese Massive Multi-discipline Multimodal Understanding Benchmark</a></p>
+            <p class="pub-authors">Ge Zhang*, Xinrun Du*, Bei Chen*, Yiming Liang, Tongxu Luo, Tianyu Zheng, Kang Zhu, <strong>Yuyang Cheng</strong>, et al.</p>
+            <p class="pub-venue"><b>arXiv preprint</b></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Education ── -->
+    <section id="education">
+      <p class="sec-label">Background</p>
+      <h2 class="sec-title">Edu<em>cation</em></h2>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <span class="tl-year">2025 – present</span>
+          <div class="tl-body has-logo">
+            <img class="tl-logo" src="images/logo_uva.png" alt="UVA" />
+            <div class="tl-text">
+            <p class="tl-title">Ph.D. in Data Science</p>
+            <p class="tl-sub">University of Virginia, School of Data Science, Charlottesville, VA</p>
+            <p class="tl-desc">Advisor: Prof. Chirag Agarwal</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2022 – 2025</span>
+          <div class="tl-body has-logo">
+            <img class="tl-logo" src="images/logo_pku.png" alt="Peking University" />
+            <div class="tl-text">
+            <p class="tl-title">M.Eng. in Computer Technology</p>
+            <p class="tl-sub">Peking University, School of Software &amp; Microelectronics, Beijing, China</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2018 – 2022</span>
+          <div class="tl-body has-logo">
+            <img class="tl-logo" src="images/logo_uestc.png" alt="UESTC" />
+            <div class="tl-text">
+            <p class="tl-title">B.A. in Translation &amp; B.Eng. in Computer Science</p>
+            <p class="tl-sub">University of Electronic Science and Technology of China (UESTC), Chengdu, China</p>
+            <p class="tl-desc">GPA: 3.88 / 4.0 &nbsp;·&nbsp; CS GPA: 4.0 / 4.0 &nbsp;·&nbsp; Rank: Top 1 in CS, Top 5 in Translation</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Experience ── -->
+    <section id="experience">
+      <p class="sec-label">Work</p>
+      <h2 class="sec-title">Exper<em>ience</em></h2>
+      <div class="timeline">
+
+
+
+        <div class="tl-item">
+          <span class="tl-year">Apr – Aug 2025</span>
+          <div class="tl-body">
+            <p class="tl-title">Research Scientist Intern</p>
+            <p class="tl-sub">China Mobile Research Institute, AI &amp; Smart Operations Center &nbsp;·&nbsp; Beijing</p>
+            <p class="tl-desc">Led AI Chatbot personalization; designed a seed-free pipeline to synthesize Chinese user personas for LLM dialogue data with LLM-based consistency filtering.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Jul – Oct 2024</span>
+          <div class="tl-body">
+            <p class="tl-title">Research Intern</p>
+            <p class="tl-sub">University of Manchester (Remote) &nbsp;·&nbsp; Advisor: Chenghua Lin</p>
+            <p class="tl-desc">Applied agent-based modeling and NLP to study how algorithmic suggestions amplify societal segregation in large-scale social simulations.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Apr – Dec 2024</span>
+          <div class="tl-body">
+            <p class="tl-title">Algorithm Intern</p>
+            <p class="tl-sub">INF Technology (Shanghai) Co., Ltd. &nbsp;·&nbsp; Shanghai</p>
+            <p class="tl-desc">Led Text2SQL task training pipeline; designed RL training phase for pre-trained model; responsible for dataset validation and evaluation.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Mar – Jul 2024</span>
+          <div class="tl-body">
+            <p class="tl-title">Field Development Intern</p>
+            <p class="tl-sub">Common Language – Gender Equality NGO &nbsp;·&nbsp; Beijing</p>
+            <p class="tl-desc">Led AI Empowerment Workshops for grassroots nonprofits; applied ML to analyze demographic attitudes toward LGBTQ+ issues in China.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Nov 2023 –<br/>Mar 2024</span>
+          <div class="tl-body">
+            <p class="tl-title">Research Intern</p>
+            <p class="tl-sub">The Hong Kong University of Science and Technology &nbsp;·&nbsp; Advisor: Jie Fu</p>
+            <p class="tl-desc">Core contributor to MAP-Neo pre-training data pipeline; led data processing for Chinese Tiny LLM; contributed to CMMMU benchmark construction.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">May – Jul 2023</span>
+          <div class="tl-body">
+            <p class="tl-title">Assistant Research Engineer</p>
+            <p class="tl-sub">Beijing Milian Science and Technology Co. &nbsp;·&nbsp; Beijing</p>
+            <p class="tl-desc">Participated in chatbot model construction; built a multi-dimensional evaluation model for Natural Language Generation.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">Apr – Jul 2021</span>
+          <div class="tl-body">
+            <p class="tl-title">Research Assistant — National Key R&amp;D Program</p>
+            <p class="tl-sub">University of Electronic Science and Technology of China &nbsp;·&nbsp; Advisor: Mengshu Hou</p>
+            <p class="tl-desc">Studied opinion extraction, topic clustering, and sentiment analysis for distributed data systems in manufacturing value chains.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Honors & Awards ── -->
+    <section id="honors">
+      <p class="sec-label">Recognition</p>
+      <h2 class="sec-title">Honors &amp; <em>Awards</em></h2>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <span class="tl-year">2022</span>
+          <div class="tl-body">
+            <p class="tl-title">Outstanding Graduate</p>
+            <p class="tl-sub">University of Electronic Science and Technology of China (UESTC)</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2022</span>
+          <div class="tl-body">
+            <p class="tl-title">Outstanding Students Delegation Team</p>
+            <p class="tl-sub">University of Electronic Science and Technology of China (UESTC)</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2021</span>
+          <div class="tl-body">
+            <p class="tl-title">National Scholarship</p>
+            <p class="tl-sub">UESTC &nbsp;·&nbsp; Ministry of Education, China</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2020</span>
+          <div class="tl-body">
+            <p class="tl-title">National Scholarship</p>
+            <p class="tl-sub">UESTC &nbsp;·&nbsp; Ministry of Education, China</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2021</span>
+          <div class="tl-body">
+            <p class="tl-title">Honorable Mention</p>
+            <p class="tl-sub">Mathematical Contest in Modeling (MCM)</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">2020</span>
+          <div class="tl-body">
+            <p class="tl-title">Second Prize</p>
+            <p class="tl-sub">Provincial E-Commerce Competition, Sichuan Province</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section id="contact">
+      <p class="sec-label">Get in Touch</p>
+      <h2 class="sec-title">Con<em>tact</em></h2>
+      <p class="contact-note" style="margin-bottom: 24px;">
+        I am actively looking for research internships for Summer 2027.
+        Feel free to reach out about research collaborations, questions about my work, or anything else!
+      </p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <a href="mailto:jrm9ga@virginia.edu">
+            <p class="contact-type">Email</p>
+            <p class="contact-value">jrm9ga@virginia.edu</p>
+          </a>
+        </div>
+        <div class="contact-card">
+          <a href="https://scholar.google.com/citations?user=fRRf-PUAAAAJ&amp;hl=en&amp;oi=ao" target="_blank">
+            <p class="contact-type">Google Scholar</p>
+            <p class="contact-value">View publications →</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Dog ── -->
+    <section id="dog">
+      <p class="sec-label">Important</p>
+      <h2 class="sec-title">Meet My <em>Dog</em></h2>
+      <div class="dog-card">
+        <div class="dog-img">
+          <img src="images/dog.jpg" alt="My dog" />
+        </div>
+        <div class="dog-text">
+          <p class="dog-name">Udon</p>
+          <p class="dog-breed">Yorkie &nbsp</p>
+          <p class="dog-bio">
+            A tiny cloud with legs and a tail that never stops wagging. <span class="hl">Every paper deadline is survived thanks to one fluffy face and an
+            unreasonable number of snuggles. 🐾</span> Most important collaborator, zero co-authored papers.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span class="footer-text">© 2026 Yuyang Cheng</span>
+    <span class="footer-text">Last updated: Sep 2026</span>
+  </footer>
+
+</body>
+</html>
